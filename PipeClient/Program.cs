@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -12,7 +14,8 @@ namespace PipeClient
         static void Main(string[] args)
         {
             Console.WriteLine("Client Running");
-            ConversationWithTheServer();
+            //ConversationWithTheServer();
+            SendOrderToServer();
         }
 
         private static void ReceiveByteAndRespond()
@@ -108,5 +111,23 @@ namespace PipeClient
             return messageBuilder.ToString();
         }
         #endregion
+
+        private static void SendOrderToServer()
+        {
+            using (NamedPipeClientStream namedPipeClient = new NamedPipeClientStream("orders"))
+            {
+                Order order = new Order()
+                {
+                    Address = "Budapest",
+                    CustomerName = "John",
+                    ProductName = "Visual Studio 2015",
+                    Quantity = 1
+                };
+                string serialised = JsonConvert.SerializeObject(order);
+                namedPipeClient.Connect();
+                byte[] messageBytes = Encoding.UTF8.GetBytes(serialised);
+                namedPipeClient.Write(messageBytes, 0, messageBytes.Length);
+            }
+        }
     }
 }
