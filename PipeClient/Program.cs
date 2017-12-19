@@ -16,6 +16,8 @@ namespace PipeClient
             Console.WriteLine("Client Running");
             //ConversationWithTheServer();
             SendOrderToServer();
+            Console.WriteLine("Waiting for Key:");
+            Console.ReadKey();
         }
 
         private static void ReceiveByteAndRespond()

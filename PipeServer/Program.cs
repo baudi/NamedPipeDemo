@@ -16,6 +16,8 @@ namespace PipeServer
             Console.WriteLine("Server Running");
             //ConversationWithTheClient();
             ReceiveObjectFromClient();
+            Console.WriteLine("Server Waiting");
+            Console.ReadKey();
         }
 
         private static void SendByteAndReceiveResponse()
