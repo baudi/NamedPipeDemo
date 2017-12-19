@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 #include "PipeClientCpp.h"
+#include "AppContext.h"
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -15,7 +17,7 @@ CWinApp theApp;
 
 using namespace std;
 
-int main()
+int main(int argc, const char * argv[])
 {
     int nRetCode = 0;
 
@@ -32,7 +34,14 @@ int main()
         }
         else
         {
-            // TODO: code your application's behavior here.
+			bool parentComplete = false;
+			//System::Windows::Forms::MessageBox::Show("debug");
+			string p1 = argv[0];
+			string p2 = argv[1];
+			AppContext process(p1, p2);
+			process.StartChildProcess();
+
+			return 0;
         }
     }
     else
